@@ -1,0 +1,1 @@
+ld -T link.ld --oformat binary -o start.bin -L../lib -lc start.o

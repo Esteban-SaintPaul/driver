@@ -1,0 +1,332 @@
+
+keyb.elf:     formato del fichero elf32-i386
+
+
+Desensamblado de la sección .text:
+
+00300000 <start>:
+  300000:	e8 79 00 00 00       	call   30007e <main>
+  300005:	b8 00 00 00 00       	mov    $0x0,%eax
+  30000a:	bb 00 00 00 00       	mov    $0x0,%ebx
+  30000f:	cd 40                	int    $0x40
+  300011:	c3                   	ret    
+
+00300012 <sys_call>:
+  300012:	55                   	push   %ebp
+  300013:	89 e5                	mov    %esp,%ebp
+  300015:	83 ec 10             	sub    $0x10,%esp
+  300018:	89 d9                	mov    %ebx,%ecx
+  30001a:	89 ca                	mov    %ecx,%edx
+  30001c:	89 d0                	mov    %edx,%eax
+  30001e:	89 4d fc             	mov    %ecx,-0x4(%ebp)
+  300021:	89 55 f8             	mov    %edx,-0x8(%ebp)
+  300024:	89 45 f4             	mov    %eax,-0xc(%ebp)
+  300027:	8b 45 08             	mov    0x8(%ebp),%eax
+  30002a:	8b 5d 0c             	mov    0xc(%ebp),%ebx
+  30002d:	8b 4d 10             	mov    0x10(%ebp),%ecx
+  300030:	8b 55 14             	mov    0x14(%ebp),%edx
+  300033:	cd 40                	int    $0x40
+  300035:	89 c0                	mov    %eax,%eax
+  300037:	89 45 f0             	mov    %eax,-0x10(%ebp)
+  30003a:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+  30003d:	8b 4d f8             	mov    -0x8(%ebp),%ecx
+  300040:	8b 55 f4             	mov    -0xc(%ebp),%edx
+  300043:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  300046:	c9                   	leave  
+  300047:	c3                   	ret    
+
+00300048 <sys_call_speed>:
+  300048:	55                   	push   %ebp
+  300049:	89 e5                	mov    %esp,%ebp
+  30004b:	83 ec 10             	sub    $0x10,%esp
+  30004e:	89 d9                	mov    %ebx,%ecx
+  300050:	89 ca                	mov    %ecx,%edx
+  300052:	89 d0                	mov    %edx,%eax
+  300054:	89 4d fc             	mov    %ecx,-0x4(%ebp)
+  300057:	89 55 f8             	mov    %edx,-0x8(%ebp)
+  30005a:	89 45 f4             	mov    %eax,-0xc(%ebp)
+  30005d:	8b 45 08             	mov    0x8(%ebp),%eax
+  300060:	8b 5d 0c             	mov    0xc(%ebp),%ebx
+  300063:	8b 4d 10             	mov    0x10(%ebp),%ecx
+  300066:	8b 55 14             	mov    0x14(%ebp),%edx
+  300069:	cd 41                	int    $0x41
+  30006b:	89 c0                	mov    %eax,%eax
+  30006d:	89 45 f0             	mov    %eax,-0x10(%ebp)
+  300070:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+  300073:	8b 4d f8             	mov    -0x8(%ebp),%ecx
+  300076:	8b 55 f4             	mov    -0xc(%ebp),%edx
+  300079:	8b 45 f0             	mov    -0x10(%ebp),%eax
+  30007c:	c9                   	leave  
+  30007d:	c3                   	ret    
+
+0030007e <main>:
+  30007e:	55                   	push   %ebp
+  30007f:	89 e5                	mov    %esp,%ebp
+  300081:	81 ec 40 02 00 00    	sub    $0x240,%esp
+  300087:	c7 45 ef 6b 65 79 62 	movl   $0x6279656b,-0x11(%ebp)
+  30008e:	c6 45 f3 00          	movb   $0x0,-0xd(%ebp)
+  300092:	8d 45 ef             	lea    -0x11(%ebp),%eax
+  300095:	89 45 cc             	mov    %eax,-0x34(%ebp)
+  300098:	c7 45 d4 00 02 00 00 	movl   $0x200,-0x2c(%ebp)
+  30009f:	8d 85 cc fd ff ff    	lea    -0x234(%ebp),%eax
+  3000a5:	89 45 e8             	mov    %eax,-0x18(%ebp)
+  3000a8:	c7 05 44 03 30 00 00 	movl   $0x0,0x300344
+  3000af:	00 00 00 
+  3000b2:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+  3000b9:	eb 12                	jmp    3000cd <main+0x4f>
+  3000bb:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  3000be:	c7 04 85 30 03 30 00 	movl   $0x0,0x300330(,%eax,4)
+  3000c5:	00 00 00 00 
+  3000c9:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+  3000cd:	83 7d fc 04          	cmpl   $0x4,-0x4(%ebp)
+  3000d1:	7e e8                	jle    3000bb <main+0x3d>
+  3000d3:	6a 00                	push   $0x0
+  3000d5:	6a 00                	push   $0x0
+  3000d7:	6a 60                	push   $0x60
+  3000d9:	68 ce 00 00 00       	push   $0xce
+  3000de:	e8 65 ff ff ff       	call   300048 <sys_call_speed>
+  3000e3:	83 c4 10             	add    $0x10,%esp
+  3000e6:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  3000e9:	b8 d2 01 30 00       	mov    $0x3001d2,%eax
+  3000ee:	6a 00                	push   $0x0
+  3000f0:	50                   	push   %eax
+  3000f1:	6a 11                	push   $0x11
+  3000f3:	68 cd 00 00 00       	push   $0xcd
+  3000f8:	e8 4b ff ff ff       	call   300048 <sys_call_speed>
+  3000fd:	83 c4 10             	add    $0x10,%esp
+  300100:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  300103:	8d 45 cc             	lea    -0x34(%ebp),%eax
+  300106:	6a 00                	push   $0x0
+  300108:	6a 00                	push   $0x0
+  30010a:	50                   	push   %eax
+  30010b:	6a 64                	push   $0x64
+  30010d:	e8 00 ff ff ff       	call   300012 <sys_call>
+  300112:	83 c4 10             	add    $0x10,%esp
+  300115:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  300118:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
+  30011f:	83 7d fc 00          	cmpl   $0x0,-0x4(%ebp)
+  300123:	0f 8e a7 00 00 00    	jle    3001d0 <main+0x152>
+  300129:	8b 45 d0             	mov    -0x30(%ebp),%eax
+  30012c:	83 f8 05             	cmp    $0x5,%eax
+  30012f:	74 0e                	je     30013f <main+0xc1>
+  300131:	83 f8 06             	cmp    $0x6,%eax
+  300134:	75 7a                	jne    3001b0 <main+0x132>
+  300136:	c7 45 d8 00 00 00 00 	movl   $0x0,-0x28(%ebp)
+  30013d:	eb 71                	jmp    3001b0 <main+0x132>
+  30013f:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+  300146:	eb 53                	jmp    30019b <main+0x11d>
+  300148:	a1 8e 02 30 00       	mov    0x30028e,%eax
+  30014d:	6a 00                	push   $0x0
+  30014f:	6a 00                	push   $0x0
+  300151:	50                   	push   %eax
+  300152:	68 c8 00 00 00       	push   $0xc8
+  300157:	e8 ec fe ff ff       	call   300048 <sys_call_speed>
+  30015c:	83 c4 10             	add    $0x10,%esp
+  30015f:	8b 45 f8             	mov    -0x8(%ebp),%eax
+  300162:	8b 04 85 30 03 30 00 	mov    0x300330(,%eax,4),%eax
+  300169:	89 c1                	mov    %eax,%ecx
+  30016b:	8d 95 cc fd ff ff    	lea    -0x234(%ebp),%edx
+  300171:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  300174:	01 d0                	add    %edx,%eax
+  300176:	88 08                	mov    %cl,(%eax)
+  300178:	8b 45 f8             	mov    -0x8(%ebp),%eax
+  30017b:	c7 04 85 30 03 30 00 	movl   $0x0,0x300330(,%eax,4)
+  300182:	00 00 00 00 
+  300186:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
+  30018a:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+  30018e:	83 7d f8 05          	cmpl   $0x5,-0x8(%ebp)
+  300192:	75 07                	jne    30019b <main+0x11d>
+  300194:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
+  30019b:	8b 45 f8             	mov    -0x8(%ebp),%eax
+  30019e:	8b 04 85 30 03 30 00 	mov    0x300330(,%eax,4),%eax
+  3001a5:	85 c0                	test   %eax,%eax
+  3001a7:	75 9f                	jne    300148 <main+0xca>
+  3001a9:	8b 45 f4             	mov    -0xc(%ebp),%eax
+  3001ac:	89 45 d8             	mov    %eax,-0x28(%ebp)
+  3001af:	90                   	nop
+  3001b0:	8b 45 d8             	mov    -0x28(%ebp),%eax
+  3001b3:	89 45 dc             	mov    %eax,-0x24(%ebp)
+  3001b6:	8d 45 cc             	lea    -0x34(%ebp),%eax
+  3001b9:	6a 00                	push   $0x0
+  3001bb:	6a 00                	push   $0x0
+  3001bd:	50                   	push   %eax
+  3001be:	6a 66                	push   $0x66
+  3001c0:	e8 4d fe ff ff       	call   300012 <sys_call>
+  3001c5:	83 c4 10             	add    $0x10,%esp
+  3001c8:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  3001cb:	e9 59 ff ff ff       	jmp    300129 <main+0xab>
+  3001d0:	eb fe                	jmp    3001d0 <main+0x152>
+
+003001d2 <man_int>:
+  3001d2:	55                   	push   %ebp
+  3001d3:	89 e5                	mov    %esp,%ebp
+  3001d5:	83 ec 08             	sub    $0x8,%esp
+  3001d8:	e8 53 00 00 00       	call   300230 <int_keyb>
+  3001dd:	a1 44 03 30 00       	mov    0x300344,%eax
+  3001e2:	8b 04 85 30 03 30 00 	mov    0x300330(,%eax,4),%eax
+  3001e9:	85 c0                	test   %eax,%eax
+  3001eb:	75 33                	jne    300220 <man_int+0x4e>
+  3001ed:	a1 44 03 30 00       	mov    0x300344,%eax
+  3001f2:	8b 15 8e 02 30 00    	mov    0x30028e,%edx
+  3001f8:	89 14 85 30 03 30 00 	mov    %edx,0x300330(,%eax,4)
+  3001ff:	a1 44 03 30 00       	mov    0x300344,%eax
+  300204:	83 c0 01             	add    $0x1,%eax
+  300207:	a3 44 03 30 00       	mov    %eax,0x300344
+  30020c:	a1 44 03 30 00       	mov    0x300344,%eax
+  300211:	83 f8 05             	cmp    $0x5,%eax
+  300214:	75 0a                	jne    300220 <man_int+0x4e>
+  300216:	c7 05 44 03 30 00 00 	movl   $0x0,0x300344
+  30021d:	00 00 00 
+  300220:	90                   	nop
+  300221:	c9                   	leave  
+  300222:	c3                   	ret    
+  300223:	66 90                	xchg   %ax,%ax
+  300225:	66 90                	xchg   %ax,%ax
+  300227:	66 90                	xchg   %ax,%ax
+  300229:	66 90                	xchg   %ax,%ax
+  30022b:	66 90                	xchg   %ax,%ax
+  30022d:	66 90                	xchg   %ax,%ax
+  30022f:	90                   	nop
+
+00300230 <int_keyb>:
+  300230:	50                   	push   %eax
+  300231:	52                   	push   %edx
+  300232:	b8 00 00 00 00       	mov    $0x0,%eax
+  300237:	c7 05 8e 02 30 00 00 	movl   $0x0,0x30028e
+  30023e:	00 00 00 
+  300241:	e4 60                	in     $0x60,%al
+  300243:	a3 8e 02 30 00       	mov    %eax,0x30028e
+  300248:	a1 96 02 30 00       	mov    0x300296,%eax
+  30024d:	8b 04 85 92 02 30 00 	mov    0x300292(,%eax,4),%eax
+  300254:	85 c0                	test   %eax,%eax
+  300256:	75 33                	jne    30028b <fin_keyb>
+  300258:	a1 96 02 30 00       	mov    0x300296,%eax
+  30025d:	8b 15 8e 02 30 00    	mov    0x30028e,%edx
+  300263:	89 14 85 92 02 30 00 	mov    %edx,0x300292(,%eax,4)
+  30026a:	a1 96 02 30 00       	mov    0x300296,%eax
+  30026f:	83 c0 01             	add    $0x1,%eax
+  300272:	a3 96 02 30 00       	mov    %eax,0x300296
+  300277:	b8 96 02 30 00       	mov    $0x300296,%eax
+  30027c:	83 f8 05             	cmp    $0x5,%eax
+  30027f:	75 0a                	jne    30028b <fin_keyb>
+  300281:	c7 05 96 02 30 00 00 	movl   $0x0,0x300296
+  300288:	00 00 00 
+
+0030028b <fin_keyb>:
+  30028b:	5a                   	pop    %edx
+  30028c:	58                   	pop    %eax
+  30028d:	c3                   	ret    
+
+0030028e <key_dato>:
+  30028e:	00 00                	add    %al,(%eax)
+	...
+
+00300292 <c_base>:
+  300292:	00 00                	add    %al,(%eax)
+	...
+
+00300296 <b_des>:
+  300296:	00 00                	add    %al,(%eax)
+	...
+
+Desensamblado de la sección .eh_frame:
+
+0030029c <.eh_frame>:
+  30029c:	14 00                	adc    $0x0,%al
+  30029e:	00 00                	add    %al,(%eax)
+  3002a0:	00 00                	add    %al,(%eax)
+  3002a2:	00 00                	add    %al,(%eax)
+  3002a4:	01 7a 52             	add    %edi,0x52(%edx)
+  3002a7:	00 01                	add    %al,(%ecx)
+  3002a9:	7c 08                	jl     3002b3 <b_des+0x1d>
+  3002ab:	01 1b                	add    %ebx,(%ebx)
+  3002ad:	0c 04                	or     $0x4,%al
+  3002af:	04 88                	add    $0x88,%al
+  3002b1:	01 00                	add    %eax,(%eax)
+  3002b3:	00 1c 00             	add    %bl,(%eax,%eax,1)
+  3002b6:	00 00                	add    %al,(%eax)
+  3002b8:	1c 00                	sbb    $0x0,%al
+  3002ba:	00 00                	add    %al,(%eax)
+  3002bc:	56                   	push   %esi
+  3002bd:	fd                   	std    
+  3002be:	ff                   	(bad)  
+  3002bf:	ff 36                	pushl  (%esi)
+  3002c1:	00 00                	add    %al,(%eax)
+  3002c3:	00 00                	add    %al,(%eax)
+  3002c5:	41                   	inc    %ecx
+  3002c6:	0e                   	push   %cs
+  3002c7:	08 85 02 42 0d 05    	or     %al,0x50d4202(%ebp)
+  3002cd:	72 c5                	jb     300294 <c_base+0x2>
+  3002cf:	0c 04                	or     $0x4,%al
+  3002d1:	04 00                	add    $0x0,%al
+  3002d3:	00 1c 00             	add    %bl,(%eax,%eax,1)
+  3002d6:	00 00                	add    %al,(%eax)
+  3002d8:	3c 00                	cmp    $0x0,%al
+  3002da:	00 00                	add    %al,(%eax)
+  3002dc:	6c                   	insb   (%dx),%es:(%edi)
+  3002dd:	fd                   	std    
+  3002de:	ff                   	(bad)  
+  3002df:	ff 36                	pushl  (%esi)
+  3002e1:	00 00                	add    %al,(%eax)
+  3002e3:	00 00                	add    %al,(%eax)
+  3002e5:	41                   	inc    %ecx
+  3002e6:	0e                   	push   %cs
+  3002e7:	08 85 02 42 0d 05    	or     %al,0x50d4202(%ebp)
+  3002ed:	72 c5                	jb     3002b4 <b_des+0x1e>
+  3002ef:	0c 04                	or     $0x4,%al
+  3002f1:	04 00                	add    $0x0,%al
+  3002f3:	00 18                	add    %bl,(%eax)
+  3002f5:	00 00                	add    %al,(%eax)
+  3002f7:	00 5c 00 00          	add    %bl,0x0(%eax,%eax,1)
+  3002fb:	00 82 fd ff ff 54    	add    %al,0x54fffffd(%edx)
+  300301:	01 00                	add    %eax,(%eax)
+  300303:	00 00                	add    %al,(%eax)
+  300305:	41                   	inc    %ecx
+  300306:	0e                   	push   %cs
+  300307:	08 85 02 42 0d 05    	or     %al,0x50d4202(%ebp)
+  30030d:	00 00                	add    %al,(%eax)
+  30030f:	00 1c 00             	add    %bl,(%eax,%eax,1)
+  300312:	00 00                	add    %al,(%eax)
+  300314:	78 00                	js     300316 <b_des+0x80>
+  300316:	00 00                	add    %al,(%eax)
+  300318:	ba fe ff ff 51       	mov    $0x51fffffe,%edx
+  30031d:	00 00                	add    %al,(%eax)
+  30031f:	00 00                	add    %al,(%eax)
+  300321:	41                   	inc    %ecx
+  300322:	0e                   	push   %cs
+  300323:	08 85 02 42 0d 05    	or     %al,0x50d4202(%ebp)
+  300329:	02 4d c5             	add    -0x3b(%ebp),%cl
+  30032c:	0c 04                	or     $0x4,%al
+  30032e:	04 00                	add    $0x0,%al
+
+Desensamblado de la sección .bss:
+
+00300330 <c>:
+	...
+
+00300344 <b>:
+  300344:	00 00                	add    %al,(%eax)
+	...
+
+Desensamblado de la sección .comment:
+
+00000000 <.comment>:
+   0:	00 54 68 65          	add    %dl,0x65(%eax,%ebp,2)
+   4:	20 4e 65             	and    %cl,0x65(%esi)
+   7:	74 77                	je     80 <start-0x2fff80>
+   9:	69 64 65 20 41 73 73 	imul   $0x65737341,0x20(%ebp,%eiz,2),%esp
+  10:	65 
+  11:	6d                   	insl   (%dx),%es:(%edi)
+  12:	62 6c 65 72          	bound  %ebp,0x72(%ebp,%eiz,2)
+  16:	20 32                	and    %dh,(%edx)
+  18:	2e 30 35 2e 30 31 00 	xor    %dh,%cs:0x31302e
+  1f:	47                   	inc    %edi
+  20:	43                   	inc    %ebx
+  21:	43                   	inc    %ebx
+  22:	3a 20                	cmp    (%eax),%ah
+  24:	28 44 65 62          	sub    %al,0x62(%ebp,%eiz,2)
+  28:	69 61 6e 20 34 2e 39 	imul   $0x392e3420,0x6e(%ecx),%esp
+  2f:	2e 32 2d 31 30 29 20 	xor    %cs:0x20293031,%ch
+  36:	34 2e                	xor    $0x2e,%al
+  38:	39 2e                	cmp    %ebp,(%esi)
+  3a:	32 00                	xor    (%eax),%al
