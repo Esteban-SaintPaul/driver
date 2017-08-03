@@ -38,13 +38,15 @@ int main(void){
 
 		i = sys_call( SYS_READ, (unsigned long)arch2, \
 				(unsigned long)text, 2 );
+sys_call_speed( SYS_HLT,0, 0, 0 );
+
 		if(i != 0){
 			i = sys_call( SYS_WRITE,\
 				(unsigned long)arch, (unsigned long)text, i );
 //aux = 0;
 //aux = text[0];
-//sys_call_speed( SYS_DEBUG,aux & 0xff, 0, 0 );
 		}
+
 	}
 	return(0);
 }

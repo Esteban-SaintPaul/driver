@@ -120,9 +120,14 @@ int main(void){
   int aux;
   char bloq_may;
   char shift;
+  char alt_gr;
 
   bloq_may = 0;	// may en 0 significa minúscula
   shift = 0;		// shift 0 significa minúscula
+  alt_gr = 0;	// alt_gr 0 significa sin presionar
+
+alt_gr = alt_gr +20;
+alt_gr = 0;
 
   set_key_char( key_code, SIZE_KEY_CHAR, 0 ); // Cargo los códigos de teclas
 
@@ -198,16 +203,10 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
                  buf_i++;
                break;
                case CODE_ALTGR :
-                 buf[buf_i] = KEY_ESPECIAL;
-                 buf_i++;
-                 buf[buf_i] = KEY_ALTGR;
-                 buf_i++;
+		 alt_gr = 1;
                break;
                case CODE_NO_ALTGR :
-                 buf[buf_i] = KEY_ESPECIAL;
-                 buf_i++;
-                 buf[buf_i] = KEY_NO_ALTGR;
-                 buf_i++;
+		 alt_gr = 0;
                break;
                case CODE_ARRIBA :
                  buf[buf_i] = KEY_ESPECIAL;
@@ -464,6 +463,7 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
       // hasta la siguiente llamada.
       //valor que se retornara al proceso llamador
      sys.ret = sys.count;
+
      i = sys_call(SYS_RET, (unsigned long) &sys, 0, 0);
    } while(1);
      // No hay que preocuparce, no estara ciclando gastando pulsos reloj
