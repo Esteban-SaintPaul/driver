@@ -1,1 +1,8 @@
-Desarrollo de drivers y programas base para Silicio SO
+Tanto los drivers como losprogramas son parte integral del Sistema 
+Operativo Silicio.
+
+Por el momento tenemos:
+
+- Keyb		Dirver de teclado
+- video		dirver de video texto sobre modo gráfico
+- start		Programa de  inicio de SO, por ahora solo prueba las funcionalidades

@@ -4,6 +4,8 @@ global	int_keyb
 global c_base
 global b_des
 
+SIZE_BUFFER equ 128
+
 SECTION .text
 int_keyb:
 	push	eax
@@ -28,7 +30,7 @@ int_keyb:
 	mov	[b_des], eax		; b_des++
 
 	mov	eax, [b_des]
-	cmp	eax, 5
+	cmp	eax, SIZE_BUFFER
 	jne	fin_keyb
 	mov dword [b_des], 0
 fin_keyb:
@@ -36,9 +38,5 @@ fin_keyb:
 	pop	eax
 	ret
 key_dato:	dd	0	; unsigned long key_dato;
-c_base:		dd	0	; unsigned long c_base[5];
-		dd	0
-		dd	0
-		dd	0
-		dd	0
+c_base:		times SIZE_BUFFER dd	0	; unsigned long c_base[ SIZE_BUFFER ];
 b_des:		dd	0	; unsigned long b_des;
