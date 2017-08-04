@@ -5,7 +5,7 @@
 #define SIZE_KEY_CHAR	128	// tamaño de array de códigos de teclado
 
 // Dfinición de códigos a enviar en caso de teclas especiales
-#define KEY_ESPECIAL	17	// Código atepuesto a cualquier código especial
+#define KEY_ESPECIAL	0	//17 o 0, Código atepuesto a cualquier código especial
 
 #define KEY_ESCAPE	1	// Ejemplo	tecla escape 	: 17 01
 #define KEY_F1 		2	// 		tecla F1 	: 17 02
@@ -66,6 +66,7 @@
 #define CODE_F12	88
 #define CODE_IMPRIMIR	14
 #define CODE_INSERTAR	82
+#define CODE_NO_INSERTAR	210
 #define CODE_SUPRIMIR	83
 #define CODE_NO_SUPRIMIR	211
 #define CODE_RETORNO	14
@@ -101,6 +102,52 @@
 #define CODE_NO_SHIFT_D	182
 #define CODE_N		39
 #define CODE_NO_N	167
+#define CODE_Q		16
+#define CODE_NO_Q	144
+#define CODE_MAYOR	86
+#define CODE_NO_MAYOR	214
+#define CODE_GUION	53
+#define CODE_NO_GUION	181
+#define CODE_PUNTO	52
+#define CODE_NO_PUNTO	180
+#define CODE_COMA	51
+#define CODE_NO_COMA	179
+#define CODE_LLAVE_O	40
+#define CODE_NO_LLAVE_O	168
+#define CODE_LLAVE_C	43
+#define CODE_NO_LLAVE_C	171
+#define CODE_MAS	27
+#define CODE_NO_MAS	155
+#define CODE_ACENTO	26
+#define CODE_NO_ACENTO	154
+#define CODE_BARRA_V	41
+#define CODE_NO_BARRA_V	169
+#define CODE_PREGUNTA	13
+#define CODE_NO_PREGUNTA	141
+#define CODE_COMILLA	12
+#define CODE_NO_COMILLA	140
+#define CODE_UNO	2
+#define CODE_NO_UNO	130
+#define CODE_DOS	3
+#define CODE_NO_DOS	131
+#define CODE_TRES	4
+#define CODE_NO_TRES	132
+#define CODE_CUATRO	5
+#define CODE_NO_CUATRO	133
+#define CODE_CINCO	6
+#define CODE_NO_CINCO	134
+#define CODE_SEIS	7
+#define CODE_NO_SEIS	135
+#define CODE_SIETE	8
+#define CODE_NO_SIETE	136
+#define CODE_OCHO	9
+#define CODE_NO_OCHO	137
+#define CODE_NUEVE	10
+#define CODE_NO_NUEVE	138
+#define CODE_CERO	11
+#define CODE_NO_CERO	139
+
+
 
 extern void int_keyb();
 extern unsigned long key_dato;
@@ -163,7 +210,7 @@ alt_gr = 0;
      case SYS_READ:
        buf_i = 0;
        while(c_base[indice]!=0){		/* Recorremos el buffer   */
-sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
+//sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
          switch (c_base[indice]){
            case CODE_ESPECIAL:
 //sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
@@ -181,10 +228,13 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
                  buf[buf_i] = KEY_INSERTAR;
                  buf_i++;
                break;
+               case CODE_NO_INSERTAR :
+			;
+               break;
                case CODE_SUPRIMIR :
-                 buf[buf_i] = KEY_ESPECIAL;
-                 buf_i++;
-                 buf[buf_i] = KEY_SUPRIMIR;
+//                 buf[buf_i] = KEY_ESPECIAL;
+//                 buf_i++;
+                 buf[buf_i] = 127;
                  buf_i++;
                break;
                case CODE_NO_SUPRIMIR :
@@ -288,9 +338,9 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
              }
            break;
            case CODE_ESCAPE:
-             buf[buf_i] = KEY_ESPECIAL;
-             buf_i++;
-             buf[buf_i] = KEY_ESCAPE;
+//             buf[buf_i] = KEY_ESPECIAL;
+//             buf_i++;
+             buf[buf_i] = 1;
              buf_i++;
             break;
            case CODE_F1:
@@ -366,21 +416,21 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
              buf_i++;
             break;
            case CODE_RETORNO:
-             buf[buf_i] = KEY_ESPECIAL;
-             buf_i++;
-             buf[buf_i] = KEY_RETORNO;
+//             buf[buf_i] = KEY_ESPECIAL;
+//             buf_i++;
+             buf[buf_i] = 8;
              buf_i++;
            break;
            case CODE_TAB :
-             buf[buf_i] = KEY_ESPECIAL;
-             buf_i++;
-             buf[buf_i] = KEY_TAB;
+//             buf[buf_i] = KEY_ESPECIAL;
+//             buf_i++;
+             buf[buf_i] = 9;
              buf_i++;
            break;
            case CODE_ENTER :
 //             buf[buf_i] = KEY_ESPECIAL;
 //             buf_i++;
-             buf[buf_i] = KEY_ENTER;
+             buf[buf_i] = 10;
              buf_i++;
            break;
            case CODE_CONTROL :
@@ -429,7 +479,197 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
            case CODE_NO_N:
 		;
             break;
+           case CODE_Q:
+		if(alt_gr == 1){
+			// alt_gr + q = @
+			buf[buf_i] = 64;	//mandamos codigo arroba cuando presionan alt_gr
+		} else {
+			// sinó mandamos 'Q' o 'q'
+			if( bloq_may == 1 || shift == 1){ buf[buf_i] = 81;} else {buf[buf_i] = 113;}
+		}
+             buf_i++;
+            break;
+           case CODE_NO_Q:
+		;
+            break;
+           case CODE_MAYOR:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 62;} else {buf[buf_i] = 60;}
+             buf_i++;
+            break;
+           case CODE_NO_MAYOR:
+		;
+            break;
+           case CODE_GUION:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 95;} else {buf[buf_i] = 45;}
+             buf_i++;
+            break;
+           case CODE_NO_GUION:
+		;
+            break;
+           case CODE_PUNTO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 58;} else {buf[buf_i] = 46;}
+             buf_i++;
+            break;
+           case CODE_NO_PUNTO:
+		;
+            break;
+           case CODE_COMA:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 59;} else {buf[buf_i] = 44;}
+             buf_i++;
+            break;
+           case CODE_NO_COMA:
+		;
+            break;
+           case CODE_LLAVE_O:
+		if(alt_gr == 1){
+			// alt_gr + q = ^
+			buf[buf_i] = 94;	//mandamos codigo arroba cuando presionan alt_gr
+		} else {
+			// sinó mandamos '[' o '{'
+			if( bloq_may == 1 || shift == 1){ buf[buf_i] = 91;} else {buf[buf_i] = 123;}
+		}
+             buf_i++;
+            break;
+           case CODE_NO_LLAVE_O:
+		;
+            break;
+           case CODE_LLAVE_C:
+		if(alt_gr == 1){
+			// alt_gr + q = `
+			buf[buf_i] = 96;
+		} else {
+			// sinó mandamos ']' o '}'
+			if( bloq_may == 1 || shift == 1){ buf[buf_i] = 93;} else {buf[buf_i] = 125;}
+		}
+             buf_i++;
+            break;
+           case CODE_NO_LLAVE_C:
+		;
+            break;
+           case CODE_MAS:
+		if(alt_gr == 1){
+			// alt_gr + q = ~
+			buf[buf_i] = 126;
+		} else {
+			// sinó mandamos '*' o '+'
+			if( bloq_may == 1 || shift == 1){ buf[buf_i] = 42;} else {buf[buf_i] = 43;}
+		}
+             buf_i++;
+            break;
+           case CODE_NO_MAS:
+		;
+            break;
+           case CODE_ACENTO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 249;} else {buf[buf_i] = 239;}
+             buf_i++;
+            break;
+           case CODE_NO_ACENTO:
+		;
+            break;
 
+           case CODE_BARRA_V:
+		if(alt_gr == 1){
+			// alt_gr + q = ¬
+			buf[buf_i] = 170;
+		} else {
+			// sinó mandamos '°' o '¬'
+			if( bloq_may == 1 || shift == 1){ buf[buf_i] = 167;} else {buf[buf_i] = 124;}
+		}
+             buf_i++;
+            break;
+           case CODE_NO_BARRA_V:
+		;
+            break;
+           case CODE_PREGUNTA:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 173;} else {buf[buf_i] = 168;}
+             buf_i++;
+            break;
+           case CODE_NO_PREGUNTA:
+		;
+            break;
+           case CODE_COMILLA:
+		if(alt_gr == 1){
+			// alt_gr + q = '\'
+			buf[buf_i] = 92;
+		} else {
+			// sinó mandamos '?' o '\''
+			if( bloq_may == 1 || shift == 1){ buf[buf_i] = 63;} else {buf[buf_i] = 39;}
+		}
+             buf_i++;
+            break;
+           case CODE_NO_COMILLA:
+		;
+            break;
+           case CODE_UNO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 33;} else {buf[buf_i] = 49;}
+             buf_i++;
+            break;
+           case CODE_NO_UNO:
+		;
+            break;
+           case CODE_DOS:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 34;} else {buf[buf_i] = 50;}
+             buf_i++;
+            break;
+           case CODE_NO_DOS:
+		;
+            break;
+           case CODE_TRES:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 35;} else {buf[buf_i] = 51;}
+             buf_i++;
+            break;
+           case CODE_NO_TRES:
+		;
+            break;
+           case CODE_CUATRO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 36;} else {buf[buf_i] = 52;}
+             buf_i++;
+            break;
+           case CODE_NO_CUATRO:
+		;
+            break;
+           case CODE_CINCO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 37;} else {buf[buf_i] = 53;}
+             buf_i++;
+            break;
+           case CODE_NO_CINCO:
+		;
+            break;
+           case CODE_SEIS:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 38;} else {buf[buf_i] = 54;}
+             buf_i++;
+            break;
+           case CODE_NO_SEIS:
+		;
+            break;
+           case CODE_SIETE:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 47;} else {buf[buf_i] = 55;}
+             buf_i++;
+            break;
+           case CODE_NO_SIETE:
+		;
+            break;
+           case CODE_OCHO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 40;} else {buf[buf_i] = 56;}
+             buf_i++;
+            break;
+           case CODE_NO_OCHO:
+		;
+            break;
+           case CODE_NUEVE:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 41;} else {buf[buf_i] = 57;}
+             buf_i++;
+            break;
+           case CODE_NO_NUEVE:
+		;
+            break;
+           case CODE_CERO:
+		if( bloq_may == 1 || shift == 1){ buf[buf_i] = 61;} else {buf[buf_i] = 48;}
+             buf_i++;
+            break;
+           case CODE_NO_CERO:
+		;
+            break;
 
           default:
          if(c_base[indice] < 128 && c_base[indice] != 42 && c_base[indice] != 54 ){	/* Solo código de tecla al presionar  */
@@ -459,10 +699,19 @@ sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
      break;
      }
 
-      // Retoramos el resultado de la llamada y nos bloqueamos 
+      // Retoramos el resultado de la llamada y nos bloqueamos
       // hasta la siguiente llamada.
       //valor que se retornara al proceso llamador
      sys.ret = sys.count;
+
+     // Si sys.count es 0 , quiere decir que no hay ninguna tecla en el fuffer
+     // de teclado que enviar al proceso llamador, por lo que le vamos a pedir
+     // al microkernel que nos bloquee hasta la próxima interrupción.
+     // con esto aliviamos termicamente al procesador porque quedará sus-
+     // pendido.
+     if(sys.count == 0){
+         sys_call_speed( SYS_HLT,0, 0, 0 );
+     }
 
      i = sys_call(SYS_RET, (unsigned long) &sys, 0, 0);
    } while(1);
