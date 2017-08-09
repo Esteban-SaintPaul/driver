@@ -173,8 +173,8 @@ int main(void){
   shift = 0;		// shift 0 significa minúscula
   alt_gr = 0;	// alt_gr 0 significa sin presionar
 
-alt_gr = alt_gr +20;
-alt_gr = 0;
+//alt_gr = alt_gr +20;
+//alt_gr = 0;
 
   set_key_char( key_code, SIZE_KEY_CHAR, 0 ); // Cargo los códigos de teclas
 
@@ -332,8 +332,8 @@ alt_gr = 0;
                break;
 
                default :
-sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
-
+//sys_call_speed( SYS_DEBUG, (unsigned long)c_base[indice] , 0, 0);
+;
 
              }
            break;

@@ -1,6 +1,6 @@
 include ../GNUmakefile.cfg
 
-DRIVER = keyb
+DRIVER = keyb-es
 
 all : $(DRIVER).bin
 
