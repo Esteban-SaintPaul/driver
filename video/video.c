@@ -2,6 +2,27 @@
 
 #define SIZE_BUF 512
 
+	typedef struct {
+		unsigned char blue;
+		unsigned char green;
+		unsigned char red;
+		unsigned char opt;
+	}rgb32;
+
+	typedef struct {
+		unsigned char blue;
+		unsigned char green;
+		unsigned char red;
+	}rgb24;
+
+void vbe_cls ( void );
+static char* dir;
+static int color;
+static int x;
+static int y;
+static int xy;
+static int xpos;
+static int ypos;
 
 int main(void){
 	char arch[]="video";
@@ -10,18 +31,18 @@ int main(void){
 	sys_param sys;
 	int i;
 	char buf[SIZE_BUF];
-	int x;
-	int y;
 	int n;
-	int color;
 	int pag;
-	char* dir;
+
 
 	sys.arch = arch;
 	sys.size = SIZE_BUF;
 	sys.buf = buf;
 	x = 0;
 	y = 0;
+	xpos = 0;
+	ypos = 0;
+
 
 	// Iniciamos las variables de la librería de C, esto se deberá incluir
 	// en un archivo que sea transparente al programador en un futuro
@@ -34,6 +55,7 @@ int main(void){
 //	sys_call_speed( SYS_DEBUG,(unsigned long) x , 0, 0);
 	y = vbe_get_y();
 //	sys_call_speed( SYS_DEBUG,(unsigned long) y , 0, 0);
+	xy = x * y;
 
 	// Calculo la cantidad de páginas
 	pag = x * y * (color / 8) / 4096;
@@ -46,11 +68,9 @@ int main(void){
 	}
 
 	// limpiemos la pantalla
+	vbe_cls();
 
-for (i=0; i< 20000 ; i++){
-	dir[i] = 0x0f;
-}
-x=0;
+//x=0;
 
 	// Registra el dispositivo
 	i = sys_call( SYS_REG, (unsigned long) &sys , 0, 0);
@@ -61,7 +81,7 @@ x=0;
 			switch (sys.call){
 			case SYS_WRITE:
 				// recorro el buffer
-				for(n=x;n < sys.count ;n++){
+				for(n=0;n < sys.count ;n++){
 sys_call_speed( SYS_DEBUG,(unsigned long) buf[n] & 0xff , 0, 0);
 //					vbe_putc( buf[n] );
 				}
@@ -106,8 +126,6 @@ sys_call_speed( SYS_DEBUG,(unsigned long) buf[n] & 0xff , 0, 0);
 //#define MAX_STRING 1024
 //#define VIDEO 0xb8000
 /*
-static int xpos = 0;
-int ypos = 0;
 //static volatile unsigned char *video = (unsigned char *) VIDEO;
 
 void vbe_bmp2graf(int c, char *tab, unsigned long x,unsigned long \
@@ -164,7 +182,7 @@ void vbe_itoa (char *buf, int base, int d)
 	}
 	*p = 0;
 }
-
+*/
 void vbe_cls ( void )
 {
 	int i;
@@ -172,30 +190,30 @@ void vbe_cls ( void )
 	rgb32 *p32;
 	char *video;
 
-	if(vbe_header.color == 0){
-		video =  vbe_header.addr;
-		for ( i=0; i< vbe_header.xy * 2;i++ )
+	if(color == 0){
+		video =  dir;
+		for ( i=0; i< xy * 2;i++ )
 		{
 			*video = 0;
 			video++;
 		}
 	}
-	if(vbe_header.color == 24){
-		p24 = (rgb24 *) vbe_header.addr;
-		for ( i=0; i< vbe_header.xy ;i++ )
+	if(color == 24){
+		p24 = (rgb24 *) dir;
+		for ( i=0; i< xy ;i++ )
 		{
 			p24->red = 0;
-			p24->green = 0;
+			p24->green = 0xf;
 			p24->blue = 0;
 			p24++;
 		}
 	}
-	if(vbe_header.color == 32){
-		p32 = (rgb32 *) vbe_header.addr;
-		for ( i=0; i< vbe_header.xy ;i++ )
+	if(color == 32){
+		p32 = (rgb32 *) dir;
+		for ( i=0; i< xy ;i++ )
 		{
 			p32->red = 0;
-			p32->green = 0;
+			p32->green = 0x0f;
 			p32->blue = 0;
 			p32++;
 		}
@@ -203,7 +221,7 @@ void vbe_cls ( void )
 	xpos = 0;
 	ypos = 0;
 }
-
+/*
 unsigned long strcmp(char* buf, char* str)
 {
 	unsigned long ret,lb,ls,i;
@@ -389,3 +407,4 @@ void memset(char *des,unsigned long cant, char dat){
 	}
 }
 */
+
