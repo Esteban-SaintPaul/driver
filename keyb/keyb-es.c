@@ -1,4 +1,5 @@
-#include "entry.h"
+#include "libc.h"
+//#include "entry.h"
 
 #define SIZE_BUF	512	// tamaño de buffer de transferencia a programas
 #define SIZE_DAT	128	// tamaño de buffer de teclado

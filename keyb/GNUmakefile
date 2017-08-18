@@ -5,8 +5,8 @@ DRIVER = keyb-es
 all : $(DRIVER).bin
 
 $(DRIVER).bin : $(DRIVER).o int_keyb.o
-	ld -T link.ld --oformat binary -o $(DRIVER).bin ../include/cr1.o $(DRIVER).o int_keyb.o
-	ld -T link.ld -o $(DRIVER).elf ../include/cr1.o $(DRIVER).o int_keyb.o
+	ld -T link.ld --oformat binary -o $(DRIVER).bin ../include/cr1.o $(DRIVER).o int_keyb.o -L../lib -lc
+	ld -T link.ld -o $(DRIVER).elf ../include/cr1.o $(DRIVER).o int_keyb.o -L../lib -lc
 
 $(DRIVER).o : $(DRIVER).c
 	gcc -c -o $(DRIVER).o $(DRIVER).c $(FLAGS)

@@ -4,13 +4,16 @@ DRIVER = libc
 
 all : $(DRIVER).a
 
-$(DRIVER).a : $(DRIVER).o ../include/cr1.o
-	ar -r $(DRIVER).a ../include/cr1.o ../include/cr1.o
+$(DRIVER).a : $(DRIVER).o entry.o
+	ar -r $(DRIVER).a $(DRIVER).o entry.o
 	cp libc.a ../lib/libc.a
 
 $(DRIVER).o : $(DRIVER).c
 	gcc -c -o $(DRIVER).o $(DRIVER).c $(FLAGS)
 
+entry.o : entry.c
+	gcc -c -o entry.o entry.c $(FLAGS)
+
 clean :
-	rm $(DRIVER).o
-	rm $(DRIVER).a
+	rm *.o
+	rm *.a
