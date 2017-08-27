@@ -1,7 +1,8 @@
-#include "entry.h"
-#include "syscall.h"
-#include "vbe.h"
-#include "libc.h"
+#include "entry.h"	// entry()
+#include "syscall.h"	// syscall()
+#include "vbe.h"	//struct vbe_header_s
+#include "libc.h"	// init_libc()
+#include "unistd.h"	// read() write()
 
 s_vbe_header vbe_header;
 
@@ -41,9 +42,23 @@ char* vbe_get_addr(){
 	return(vbe_header.addr);
 }
 
-/*
-int open( char* arch, char* mode){
 
-	return(0);
+int open( char* arch, char* mode){
+	int ret;
+	do{
+		ret = sys_call( SYS_OPEN, (unsigned long) arch, (unsigned long) mode,0);
+	}while(ret < 0);
+	return(ret);
 }
-*/
+
+int read (int fd, void *buf, int count){
+	int ret;
+	ret = sys_call(SYS_READ, (unsigned long) fd, (unsigned long) buf, count);
+	return(ret);
+}
+
+int write (int fd, void *buf, int count){
+	int ret;
+	ret = sys_call( SYS_WRITE, (unsigned long)fd, (unsigned long)buf, count);
+	return (ret);
+}
