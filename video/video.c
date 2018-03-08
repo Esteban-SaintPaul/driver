@@ -116,7 +116,8 @@ int main(void){
 				// recorro el buffer
 				for(n=0;n < sys.count ;n++){
 //sys_call_speed( SYS_DEBUG,(unsigned long) buf[n] & 0xff , 0, 0);
-					vbe_putc( buf[n] );
+					vbe_putc( buf[n] & 0xff );
+
 				}
 				break;
 			case SYS_READ:
@@ -1649,6 +1650,42 @@ i=12;
 		f[i+14]=0x0;
 		f[i+15]=0x0;
 
+	i=16 * 164;//ñ
+		f[i]=0x0;
+		f[i+1]=0x0;
+		f[i+2]=0x26;
+		f[i+3]=0x19;
+		f[i+4]=0x0;
+		f[i+5]=0x1d;
+		f[i+6]=0x22;
+		f[i+7]=0x22;
+		f[i+8]=0x22;
+		f[i+9]=0x22;
+		f[i+10]=0x22;
+		f[i+11]=0x22;
+		f[i+12]=0x22;
+		f[i+13]=0x0;
+		f[i+14]=0x0;
+		f[i+15]=0x0;
+
+	i=16 * 165;//Ñ
+		f[i]=0x0;
+		f[i+1]=0x26;
+		f[i+2]=0x19;
+		f[i+3]=0x0;
+		f[i+4]=0x21;
+		f[i+5]=0x23;
+		f[i+6]=0x23;
+		f[i+7]=0x25;
+		f[i+8]=0x25;
+		f[i+9]=0x29;
+		f[i+10]=0x31;
+		f[i+11]=0x31;
+		f[i+12]=0x21;
+		f[i+13]=0x0;
+		f[i+14]=0x0;
+		f[i+15]=0x0;
+
 }
 
 unsigned long vbe_strcmp(char* buf, char* str)
@@ -1666,7 +1703,7 @@ unsigned long vbe_strcmp(char* buf, char* str)
 			{
 				i++;
 			}
-			if ( i == lb ) ret = 0; 
+			if ( i == lb ) ret = 0;
 		}
 		else
 		{
