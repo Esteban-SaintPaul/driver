@@ -21,6 +21,13 @@ int main(void){
 
 	// Imprimo un texto para saber que se inició Start.bin
 	write( stdout, textstart, 27);
+text[0]=166;
+text[1]=236;
+text[2]=168;
+text[3]=44;
+text[4]=182;
+text[5]=0;
+i = write( stdout, text, 5);
 
 	while(1){
 		for(i=0;i<65000;i++){;}//retardo

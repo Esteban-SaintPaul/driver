@@ -2,11 +2,7 @@
 
 
 typedef struct font {
-	union lin {
-		unsigned char c,
-		b0 :1,
-		b1 :1,
-	};
+	union lin {unsigned char c,b0 :1,b1 :1,};
 };
 
 #define B00000000 0
@@ -22,6 +18,7 @@ font letra[256];
 
 int main(){
 letra['A'].lin.b0 =0;
+letra['A']= 64;
 printf("%c\n",letra['A']);
 return(0);
 }
